@@ -1,11 +1,284 @@
 {
-	"Print to console": {
-		"scope": "javascript,typescript",
-		"prefix": "log",
+	"BAT FILE": {
+		"scope": "bat",
+		"prefix": "bat",
 		"body": [
-			"console.log('$1');",
-			"$2 Console"
+			"@echo OFF\n",
+			"pushd \"%~dp0\"\n",
+			"setlocal ENABLEDELAYEDEXPANSION\n",
+			"$0\n",
+			"endlocal\n",
+			"popd\n",
+			"goto :eof\n",
+		]
+	},
+	"ECHO": {
+		"scope": "bat",
+		"prefix": "echo",
+		"body": [
+			"echo $0"
 		],
-		"description": "Log output to console"
-	}
+		"description": "ECHO [message]. Display messages. ECHO without parameters displays the current echo setting."
+	},
+	"ECHO SWITCH": {
+		"scope": "bat",
+		"prefix": "@echo",
+		"body": [
+			"@echo ${1|OFF,ON|}"
+		],
+		"description": "Turns command-echoing on or off."
+	},
+	"FOR": {
+		"scope": "bat",
+		"prefix": "for",
+		"body": [
+			"for %%${1:v} in (",
+			"\t${2:set}",
+			") do (",
+			"\t$0",
+			")"
+		]
+	},
+	"FOR /D: CMDEXT ON": {
+		"scope": "bat",
+		"prefix": "for-d",
+		"body": [
+			"for /d %%${1:v} in (",
+			"\t${2:set}",
+			") do (",
+			"\t$0",
+			")"
+		],
+		"description": "If set contains wildcards, then specifies to match against directory names instead of file names."
+	},
+	"FOR /R: CMDEXT ON": {
+		"scope": "bat",
+		"prefix": "for-r",
+		"body": [
+			"for /r \"%~dp0\" %%${1:v} in (",
+			"\t${2:set}",
+			") do (",
+			"\t$0",
+			")"
+		],
+		"description": "Walks the directory tree rooted at [drive:]path, executing the FOR statement in each directory of the tree.  If no directory specification is specified after /R then the current directory is assumed.  If set is just a single period (.) character then it will just enumerate the directory tree."
+	},
+	"FOR /L: CMDEXT ON": {
+		"scope": "bat",
+		"prefix": "for-l",
+		"body": [
+			"for /l %%${1:v} in (${2:%start%},${3:%step%},${4:%end%}) do (",
+			"\t$0",
+			")"
+		],
+		"description": "The set is a sequence of numbers from start to end, by step amount."
+	},
+	"FOR /F FILESET: CMDEXT ON": {
+		"scope": "bat",
+		"prefix": "for-f",
+		"body": [
+			"for /f \"${1:delims= }\" %%${2:v} in (",
+			"\t${3:file-set}",
+			") do (",
+			"\t$0",
+			")"
+		],
+		"description": "file-set is one or more file names.  Each file is opened, read and processed before going on to the next file in file-set. Processing consists of reading in the file, breaking it up into individual lines of text and then parsing each line into zero or more tokens.  The body of the for loop is then called with the variable value(s) set to the found token string(s).  By default, /F passes the first blank separated token from each line of each file. Blank lines are skipped.  You can override the default parsing behavior by specifying the optional \"options\" parameter. This is a quoted string which contains one or more keywords to specify different parsing options."
+	},
+	"FOR /F STRING: CMDEXT ON": {
+		"scope": "bat",
+		"prefix": "for-f",
+		"body": [
+			"for /f \"${1:skip=0 tokens=1 delims= }\" %%${2:v} in (\"${3:string}\") do (",
+			"\t$0",
+			")"
+		]
+	},
+	"FOR /F STRING usebackq: CMDEXT ON": {
+		"scope": "bat",
+		"prefix": "for-f",
+		"body": [
+			"for /f \"usebackq${1: skip=0 tokens=1 delims= }\" %%${2:v} in ('${3:string}') do (",
+			"\t$0",
+			")"
+		]
+	},
+	"FOR /F COMMAND: CMDEXT ON": {
+		"scope": "bat",
+		"prefix": "for-f",
+		"body": [
+			"for /f \"${1:skip=0 tokens=1 delims= }\" %%${2:v} in ('${3:command}') do (",
+			"\t$0",
+			")"
+		]
+	},
+	"FOR /F COMMAND usebackq: CMDEXT ON": {
+		"scope": "bat",
+		"prefix": "for-f",
+		"body": [
+			"for /f \"usebackq${1: skip=0 tokens=1 delims= }\" %%${2:v} in (`${3:command}`) do (",
+			"\t$0",
+			")"
+		]
+	},
+	"Argument and Variable references": {
+		"scope": "bat",
+		"prefix": "varef",
+		"body": [
+			"%~${1|f,d,p,n,x,s,a,t,z,$PATH:|}"
+		],
+		"description": "Specifies an end of line comment character (just one)."
+	},
+	"IF EXIST": {
+		"scope": "bat",
+		"prefix": "if-exist",
+		"body": [
+			"if${1| , not |}EXIST \"%~nx0\" (",
+			"\t$0",
+			")"
+		]
+	},
+	"IF ERRORLEVEL": {
+		"scope": "bat",
+		"prefix": "if-errorlevel",
+		"body": [
+			"if${1| , not |}ERRORLEVEL 0 (",
+			"\t$0",
+			")"
+		]
+	},
+	"IF EQUAL": {
+		"scope": "bat",
+		"prefix": "if-equal",
+		"body": [
+			"if${1| , not |}${2:%string1%}==${3:%string2%} (",
+			"\t$0",
+			")"
+		]
+	},
+	"IF COMPARE: CMDEXT ON": {
+		"scope": "bat",
+		"prefix": "if",
+		"body": [
+			"if${1| , /i |}${3:%string1%} ${2|equ,neq,lss,leq,gtr,geq|} ${4:%string2%} (",
+			"\t$0",
+			")"
+		]
+	},
+	"IF DEFINED: CMDEXT ON": {
+		"scope": "bat",
+		"prefix": "if-defined",
+		"body": [
+			"if${1| , /i |}${3:%string1%} ${2|equ,neq,lss,leq,gtr,geq|} ${4:%string2%} (",
+			"\t$0",
+			")"
+		]
+	},
+	"ELSE": {
+		"scope": "bat",
+		"prefix": "else",
+		"body": [
+			"else (",
+			"\t$0",
+			")"
+		]
+	},
+	"CD": {
+		"scope": "bat",
+		"prefix": "CD",
+		"body": [
+			"%CD%"
+		]
+	},
+	"DATE": {
+		"scope": "bat",
+		"prefix": "DATE",
+		"body": [
+			"%DATE%"
+		]
+	},
+	"TIME": {
+		"scope": "bat",
+		"prefix": "TIME",
+		"body": [
+			"%TIME%"
+		]
+	},
+	"RANDOM": {
+		"scope": "bat",
+		"prefix": "RANDOM",
+		"body": [
+			"%RANDOM%"
+		]
+	},
+	"ERRORLEVEL": {
+		"scope": "bat",
+		"prefix": "ERRORLEVEL",
+		"body": [
+			"%ERRORLEVEL%"
+		]
+	},
+	"CALL SWITCH": {
+		"scope": "bat",
+		"prefix": "call-switch",
+		"body": [
+			"call :switch-${1:%variable%} 2> nul || (",
+			"\t$0",
+			")",
+			"goto eos",
+			":switch-${2}",
+			"\t$0",
+			"\tgoto :eof",
+			":switch-${2}",
+			"\t$0",
+			"\tgoto :eof",
+			":eos"
+		]
+	},
+	"GOTO SWITCH": {
+		"scope": "bat",
+		"prefix": "goto-switch",
+		"body": [
+			"goto switch-${1:%variable%} 2> nul || (",
+			"\t$0",
+			")",
+			":switch-${2}",
+			"\t$0",
+			"\tgoto eos",
+			":switch-${2}",
+			"\t$0",
+			":eos"
+		]
+	},
+	"PUSHD": {
+		"scope": "bat",
+		"prefix": "pushd",
+		"body": [
+			"pushd \"%~dp0\" && (",
+			"\t$0",
+			"\tpopd",
+			")"
+		]
+	},
+	"SET": {
+		"scope": "bat",
+		"prefix": "set",
+		"body": [
+			"set${1| , /a , /p |}${2:variable=string}"
+		]
+	},
+	"SETLOCAL": {
+		"scope": "bat",
+		"prefix": "setlocal",
+		"body": [
+			"setlocal${1|\u200b, ENABLEDELAYEDEXPANSION|}"
+		]
+	},
+	"ECHO NONEWLINE": {
+		"scope": "bat",
+		"prefix": "set-no-nl",
+		"body": [
+			"set /p \"=${1:string}\" < nul"
+		]
+	},
 }
