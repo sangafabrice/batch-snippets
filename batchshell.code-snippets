@@ -9,7 +9,7 @@
 			"$0\n",
 			"endlocal\n",
 			"popd\n",
-			"goto :eof\n",
+			"goto :eof",
 		]
 	},
 	"ECHO": {
@@ -248,6 +248,13 @@
 			":switch-${2}",
 			"\t$0",
 			":eos"
+		]
+	},
+	"GOTO": {
+		"scope": "bat",
+		"prefix": "goto",
+		"body": [
+			"goto${1| , :eof|}"
 		]
 	},
 	"PUSHD": {

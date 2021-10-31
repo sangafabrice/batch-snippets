@@ -1,6 +1,11 @@
 {
     "folders": [
         {
+            // Silent install Batch KB
+            "name": "silent-install-kb",
+            "path": "..\\silent-install-kb"
+        },
+        {
             // Batch snippets
             "name": "batch-snippets",
             "path": "."
