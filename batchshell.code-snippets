@@ -169,7 +169,7 @@
 		"scope": "bat",
 		"prefix": "if-defined",
 		"body": [
-			"if${1| , /i |}${3:%string1%} ${2|equ,neq,lss,leq,gtr,geq|} ${4:%string2%} (",
+			"if${1| , not |}DEFINED ${2:variable} (",
 			"\t$0",
 			")"
 		]
