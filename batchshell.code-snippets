@@ -3,20 +3,20 @@
 		"scope": "bat",
 		"prefix": "bat",
 		"body": [
-			"@echo OFF\n",
-			"pushd \"%~dp0\"\n",
-			"setlocal ENABLEDELAYEDEXPANSION\n",
+			"@Echo OFF\n",
+			"PushD \"%~dp0\"\n",
+			"SetLocal ENABLEDELAYEDEXPANSION\n",
 			"$0\n",
-			"endlocal\n",
-			"popd\n",
-			"goto :eof",
+			"EndLocal\n",
+			"PopD\n",
+			"GoTo :EOF",
 		]
 	},
 	"ECHO": {
 		"scope": "bat",
 		"prefix": "echo",
 		"body": [
-			"echo $0"
+			"Echo $0"
 		],
 		"description": "ECHO [message]. Display messages. ECHO without parameters displays the current echo setting."
 	},
@@ -24,7 +24,7 @@
 		"scope": "bat",
 		"prefix": "@echo",
 		"body": [
-			"@echo ${1|OFF,ON|}"
+			"@Echo ${1|OFF,ON|}"
 		],
 		"description": "Turns command-echoing on or off."
 	},
@@ -32,9 +32,9 @@
 		"scope": "bat",
 		"prefix": "for",
 		"body": [
-			"for %%${1:v} in (",
+			"For %%${1:V} In (",
 			"\t${2:set}",
-			") do (",
+			") Do (",
 			"\t$0",
 			")"
 		]
@@ -43,9 +43,9 @@
 		"scope": "bat",
 		"prefix": "for-d",
 		"body": [
-			"for /d %%${1:v} in (",
+			"For /D %%${1:V} In (",
 			"\t${2:set}",
-			") do (",
+			") Do (",
 			"\t$0",
 			")"
 		],
@@ -55,9 +55,9 @@
 		"scope": "bat",
 		"prefix": "for-r",
 		"body": [
-			"for /r \"%~dp0\" %%${1:v} in (",
+			"For /R \"%~dp0\" %%${1:V} In (",
 			"\t${2:set}",
-			") do (",
+			") Do (",
 			"\t$0",
 			")"
 		],
@@ -67,7 +67,7 @@
 		"scope": "bat",
 		"prefix": "for-l",
 		"body": [
-			"for /l %%${1:v} in (${2:%start%},${3:%step%},${4:%end%}) do (",
+			"For /L %%${1:V} In (${2:%start%},${3:%step%},${4:%end%}) Do (",
 			"\t$0",
 			")"
 		],
@@ -77,9 +77,9 @@
 		"scope": "bat",
 		"prefix": "for-f",
 		"body": [
-			"for /f \"${1:delims= }\" %%${2:v} in (",
+			"For /F \"${1:Delims= }\" %%${2:V} In (",
 			"\t${3:file-set}",
-			") do (",
+			") Do (",
 			"\t$0",
 			")"
 		],
@@ -89,16 +89,16 @@
 		"scope": "bat",
 		"prefix": "for-f",
 		"body": [
-			"for /f \"${1:skip=0 tokens=1 delims= }\" %%${2:v} in (\"${3:string}\") do (",
+			"For /F \"${1:Skip=1 Tokens=1 Delims= }\" %%${2:V} In (\"${3:string}\") Do (",
 			"\t$0",
 			")"
 		]
 	},
-	"FOR /F STRING usebackq: CMDEXT ON": {
+	"FOR /F STRING UseBackq: CMDEXT ON": {
 		"scope": "bat",
 		"prefix": "for-f",
 		"body": [
-			"for /f \"usebackq${1: skip=0 tokens=1 delims= }\" %%${2:v} in ('${3:string}') do (",
+			"For /F \"UseBackq${1: Skip=1 Tokens=1 Delims= }\" %%${2:V} In ('${3:string}') Do (",
 			"\t$0",
 			")"
 		]
@@ -107,16 +107,16 @@
 		"scope": "bat",
 		"prefix": "for-f",
 		"body": [
-			"for /f \"${1:skip=0 tokens=1 delims= }\" %%${2:v} in ('${3:command}') do (",
+			"For /F \"${1:Skip=1 Tokens=1 Delims= }\" %%${2:V} In ('${3:command}') Do (",
 			"\t$0",
 			")"
 		]
 	},
-	"FOR /F COMMAND usebackq: CMDEXT ON": {
+	"FOR /F COMMAND UseBackq: CMDEXT ON": {
 		"scope": "bat",
 		"prefix": "for-f",
 		"body": [
-			"for /f \"usebackq${1: skip=0 tokens=1 delims= }\" %%${2:v} in (`${3:command}`) do (",
+			"For /F \"UseBackq${1: Skip=1 Tokens=1 Delims= }\" %%${2:V} In (`${3:command}`) Do (",
 			"\t$0",
 			")"
 		]
@@ -133,7 +133,7 @@
 		"scope": "bat",
 		"prefix": "if-exist",
 		"body": [
-			"if${1| , not |}EXIST \"%~nx0\" (",
+			"If${1| , Not |}EXIST \"%~nx0\" (",
 			"\t$0",
 			")"
 		]
@@ -142,7 +142,7 @@
 		"scope": "bat",
 		"prefix": "if-errorlevel",
 		"body": [
-			"if${1| , not |}ERRORLEVEL 0 (",
+			"If${1| , Not |}ERRORLEVEL 0 (",
 			"\t$0",
 			")"
 		]
@@ -151,7 +151,7 @@
 		"scope": "bat",
 		"prefix": "if-equal",
 		"body": [
-			"if${1| , not |}${2:%string1%}==${3:%string2%} (",
+			"If${1| , Not |}${2:%string1%}==${3:%string2%} (",
 			"\t$0",
 			")"
 		]
@@ -160,7 +160,7 @@
 		"scope": "bat",
 		"prefix": "if",
 		"body": [
-			"if${1| , /i |}${3:%string1%} ${2|equ,neq,lss,leq,gtr,geq|} ${4:%string2%} (",
+			"If${1| , /I |}${3:%string1%} ${2|EQU,NEQ,LSS,LEQ,GTR,GEQ|} ${4:%string2%} (",
 			"\t$0",
 			")"
 		]
@@ -169,7 +169,7 @@
 		"scope": "bat",
 		"prefix": "if-defined",
 		"body": [
-			"if${1| , not |}DEFINED ${2:variable} (",
+			"If${1| , Not |}DEFINED ${2:variable} (",
 			"\t$0",
 			")"
 		]
@@ -178,7 +178,7 @@
 		"scope": "bat",
 		"prefix": "else",
 		"body": [
-			"else (",
+			"Else (",
 			"\t$0",
 			")"
 		]
@@ -222,48 +222,48 @@
 		"scope": "bat",
 		"prefix": "call-switch",
 		"body": [
-			"call :switch-${1:%variable%} 2> nul || (",
+			"Call :Switch-${1:%variable%} 2> Nul || (",
 			"\t$0",
 			")",
-			"goto eos",
-			":switch-${2}",
+			"GoTo EOS",
+			":Switch-${2}",
 			"\t$0",
-			"\tgoto :eof",
-			":switch-${2}",
+			"\tGoTo :EOF",
+			":Switch-${2}",
 			"\t$0",
-			"\tgoto :eof",
-			":eos"
+			"\tGoTo :EOF",
+			":EOS"
 		]
 	},
 	"GOTO SWITCH": {
 		"scope": "bat",
 		"prefix": "goto-switch",
 		"body": [
-			"goto switch-${1:%variable%} 2> nul || (",
+			"GoTo Switch-${1:%variable%} 2> Nul || (",
 			"\t$0",
 			")",
-			":switch-${2}",
+			":Switch-${2}",
 			"\t$0",
-			"\tgoto eos",
-			":switch-${2}",
+			"\tGoTo EOS",
+			":Switch-${3}",
 			"\t$0",
-			":eos"
+			":EOS"
 		]
 	},
 	"GOTO": {
 		"scope": "bat",
 		"prefix": "goto",
 		"body": [
-			"goto${1| , :eof|}"
+			"GoTo${1| , :EOF|}"
 		]
 	},
 	"PUSHD": {
 		"scope": "bat",
 		"prefix": "pushd",
 		"body": [
-			"pushd \"%~dp0\" && (",
+			"PushD \"%~dp0\" && (",
 			"\t$0",
-			"\tpopd",
+			"\tPopD",
 			")"
 		]
 	},
@@ -271,42 +271,42 @@
 		"scope": "bat",
 		"prefix": "set",
 		"body": [
-			"set${1| , /a , /p |}${2:variable=string}"
+			"Set${1| , /A , /P |}${2:variable=string}"
 		]
 	},
 	"SETLOCAL": {
 		"scope": "bat",
 		"prefix": "setlocal",
 		"body": [
-			"setlocal${1|\u200b, ENABLEDELAYEDEXPANSION|}"
+			"SetLocal${1|\u200b, ENABLEDELAYEDEXPANSION|}"
 		]
 	},
 	"ECHO NONEWLINE": {
 		"scope": "bat",
 		"prefix": "set-no-nl",
 		"body": [
-			"set /p \"=${1:string}\" < nul"
+			"Set /P \"=${1:string}\" < Nul"
 		]
 	},
 	"DELETE": {
 		"scope": "bat",
 		"prefix": "del",
 		"body": [
-			"del ${1|/p,/f /s /q|} file"
+			"Del ${1|/P,/F /S /Q|} Filespecs"
 		]
 	},
 	"TEST ARGS": {
 		"scope": "bat",
 		"prefix": "echo-args",
 		"body": [
-			"echo '%0' '%1' '%2' '%3' '%4' '%5' '%6' '%7' '%8' '%9'"
+			"Echo '%0' '%1' '%2' '%3' '%4' '%5' '%6' '%7' '%8' '%9'"
 		]
 	},
 	"EXIT": {
 		"scope": "bat",
 		"prefix": "exit",
 		"body": [
-			"exit /b ${1:0}"
+			"Exit /B ${1:0}"
 		]
 	},
 }
